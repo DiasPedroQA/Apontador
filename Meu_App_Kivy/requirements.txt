@@ -1,0 +1,32 @@
+certifi==2025.1.31
+charset-normalizer==3.4.1
+coverage==7.8.0
+docutils==0.21.2
+filetype==1.2.0
+idna==3.10
+iniconfig==2.1.0
+Kivy-Garden==0.1.5
+packaging==24.2
+pillow==11.1.0
+pluggy==1.5.0
+Pygments==2.19.1
+requests==2.32.3
+urllib3==2.3.0
+
+# Dependências principais
+kivy==2.3.1
+kivymd==1.2.0
+
+# Testes
+pytest==8.3.5
+pytest-cov==6.1.1
+
+# Tipagem (opcional)
+mypy==1.15.0
+
+# Formatação e qualidade de código (opcional)
+black==25.1.0
+flake8==7.2.0
+
+# Documentação (opcional)
+sphinx==8.2.3

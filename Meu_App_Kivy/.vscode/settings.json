@@ -1,0 +1,60 @@
+{
+  "python.testing.pytestEnabled": true, // Enable pytest for testing
+  "python.testing.unittestEnabled": false, // Disable unittest
+  "editor.formatOnSave": true, // Automatically format on save
+  "editor.codeActionsOnSave": {
+    "source.organizeImports": "always" // Organize imports on save
+  },
+  "files.exclude": {
+    "**/.venv": true, // Exclude virtual environment directories
+    "**/.mypy_cache/": true, // Exclude mypy cache directories
+    "**/.pytest_cache/": true, // Exclude pytest cache directories
+    "**/__pycache__": true, // Exclude Python cache directories
+    "**/__init__.py": true, // Exclude git directories
+    "**/*.pyc": true, // Exclude compiled Python files
+    "**/.git": true
+  },
+  "terminal.integrated.defaultProfile.linux": "bash", // Set default terminal profile
+  "workbench.colorTheme": "Default Dark+", // Set color theme
+  "editor.tabSize": 4, // Set tab size to 4 spaces
+  "editor.wordWrap": "on", // Enable word wrap
+  "editor.minimap.enabled": false, // Disable minimap
+  "explorer.confirmDelete": false, // Disable delete confirmation in explorer
+  "python.analysis.typeCheckingMode": "strict", // Enable strict type checking
+  "python.envFile": "${workspaceFolder}/.env", // Load environment variables from .env file
+  "debug.console.fontSize": 14, // Set font size for debug console
+  "cSpell.words": [
+    "alido",
+    "AORUS",
+    "Botao",
+    "boxlayout",
+    "certifi",
+    "composicao",
+    "diretorio",
+    "docutils",
+    "existencia",
+    "halign",
+    "icone",
+    "Icone",
+    "idna",
+    "inicializacao",
+    "iniconfig",
+    "invalidos",
+    "kivy",
+    "kivymd",
+    "levelname",
+    "linux",
+    "mypy",
+    "naoexiste",
+    "pluggy",
+    "Pygments",
+    "rootdir",
+    "saida",
+    "urllib",
+    "Usuario",
+    "validacao",
+    "Validacao",
+    "venv",
+    "verificacao"
+  ]
+}
