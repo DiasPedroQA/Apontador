@@ -46,13 +46,15 @@ MENSAGENS = {
             "/home/teste/arquivo.txt",
             {
                 "valido": True,
-                "mensagem": MENSAGENS["caminho_valido"]}
+                "mensagem": MENSAGENS["caminho_valido"]
+            }
         ), (
             ValidadorLinux,
             "/home/teste/arquivo\0invalido.txt",
             {
                 "valido": False,
-                "mensagem": MENSAGENS["caracteres_proibidos"]}
+                "mensagem": MENSAGENS["caracteres_proibidos"]
+            }
         ), (
             ValidadorLinux,
             "C:\\Users\\teste",
@@ -87,7 +89,12 @@ MENSAGENS = {
         ),
     ],
 )
-def test_validadores(validador, caminho, esperado, monkeypatch):
+def test_validadores(
+    validador,
+    caminho,
+    esperado,
+    monkeypatch
+):
     # Mock MENSAGENS
     monkeypatch.setattr(
         "app.models.validadores.tri_fasico.MENSAGENS",
