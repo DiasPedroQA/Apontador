@@ -1,6 +1,9 @@
 import pytest
 from pathlib import Path
-from app.utils.utils_validacao import InspecionadorCaminho, DadosCaminho
+from app.utils.utils_validacao import (
+    InspecionadorCaminho,
+    DadosCaminho
+)
 
 # -*- coding: utf-8 -*-
 
@@ -9,10 +12,24 @@ from app.utils.utils_validacao import InspecionadorCaminho, DadosCaminho
 @pytest.mark.parametrize(
     "caminho_entrada, esperado",
     [
-        ("/tmp/teste.txt", {"existe": False, "e_arquivo": False, "e_diretório": False, "sistema": "Linux"}),
-        ("C:\\Windows\\System32", {"existe": Path("C:\\Windows\\System32").exists(), "e_arquivo": False, "e_diretório": True, "sistema": "Windows"}),
-        ("/home/user", {"existe": Path("/home/user").exists(), "e_arquivo": False, "e_diretório": True, "sistema": "Linux"}),
-        ("invalid_path", {"existe": False, "e_arquivo": False, "e_diretório": False, "sistema": "Desconhecido"}),
+        (
+            "/tmp/teste.txt",
+            {
+                "existe": False,
+                "e_arquivo": False,
+                "e_diretório": False,
+                "sistema": "Linux"
+            }
+        ),
+        (
+            "C:\\Windows\\System32", {"existe": Path("C:\\Windows\\System32").exists(), "e_arquivo": False, "e_diretório": True, "sistema": "Windows"}
+        ),
+        (
+            "/home/user", {"existe": Path("/home/user").exists(), "e_arquivo": False, "e_diretório": True, "sistema": "Linux"}
+        ),
+        (
+            "invalid_path", {"existe": False, "e_arquivo": False, "e_diretório": False, "sistema": "Desconhecido"}
+        ),
     ],
 )
 def test_inspecionar(caminho_entrada, esperado):
