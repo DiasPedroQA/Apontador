@@ -1,13 +1,12 @@
 # -*- coding: utf-8 -*-
 """
-TelaIdentificador - Tela principal de entrada e identificação de caminhos.
+    TelaIdentificador - Tela principal de entrada e identificação de caminhos.
 
-Este módulo define a tela gráfica da aplicação onde o usuário pode
-inserir e identificar caminhos de arquivos ou diretórios com base no sistema
-operacional detectado.
+    Este módulo define a tela gráfica da aplicação onde o usuário pode
+    inserir e identificar caminhos de arquivos ou diretórios com base no sistema operacional detectado.
 
-Autor: Pedro P. M. Dias
-Data: 2025-01-01
+    Autor: Pedro P. M. Dias
+    Data: 2025-01-01
 """
 
 # pylint: disable=line-too-long, no-else-return, import-error, too-few-public-methods, too-many-ancestors  # noqa: E501
