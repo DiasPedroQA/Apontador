@@ -1,36 +1,60 @@
 {
-  "python.testing.pytestEnabled": true, // Enable pytest for testing
-  "python.testing.unittestEnabled": false, // Disable unittest
-  "editor.formatOnSave": true, // Automatically format on save
+  // Caminho do interpretador Python
+  "python.defaultInterpreterPath": "venv/bin/python",
+
+  // Formatação de código
+  "editor.formatOnSave": true,
+
+  // Testes com pytest
+  "python.testing.pytestEnabled": true,
+  "python.testing.unittestEnabled": false,
+  "python.testing.pytestArgs": ["tests"],
+
+  // Organizar imports automaticamente ao salvar
   "editor.codeActionsOnSave": {
-    "source.organizeImports": "always" // Organize imports on save
+    "source.organizeImports": "always"
   },
+
+  // Exclusões de arquivos e diretórios na árvore de arquivos
   "files.exclude": {
-    "**/.venv": true, // Exclude virtual environment directories
-    "**/.mypy_cache/": true, // Exclude mypy cache directories
-    "**/.pytest_cache/": true, // Exclude pytest cache directories
-    "**/__pycache__": true, // Exclude Python cache directories
-    "**/__init__.py": true, // Exclude git directories
-    "**/*.pyc": true, // Exclude compiled Python files
+    "**/.venv": true,
+    "**/.mypy_cache/": true,
+    "**/.pytest_cache/": true,
+    "**/__pycache__/": true,
+    "**/*.pyc": true,
     "**/.git": true
   },
-  "terminal.integrated.defaultProfile.linux": "bash", // Set default terminal profile
-  "workbench.colorTheme": "Default Dark+", // Set color theme
-  "editor.tabSize": 4, // Set tab size to 4 spaces
-  "editor.wordWrap": "on", // Enable word wrap
-  "editor.minimap.enabled": false, // Disable minimap
-  "explorer.confirmDelete": false, // Disable delete confirmation in explorer
-  "python.analysis.typeCheckingMode": "strict", // Enable strict type checking
-  "python.envFile": "${workspaceFolder}/.env", // Load environment variables from .env file
-  "debug.console.fontSize": 14, // Set font size for debug console
+
+  // Ajustes de editor e interface
+  "editor.tabSize": 4,
+  "editor.wordWrap": "on",
+  "editor.minimap.enabled": false,
+  "workbench.colorTheme": "Default Dark+",
+  "explorer.confirmDelete": false,
+
+  // Terminal padrão para Linux
+  "terminal.integrated.defaultProfile.linux": "bash",
+
+  // Análise de tipos estática rigorosa
+  "python.analysis.typeCheckingMode": "strict",
+
+  // Variáveis de ambiente
+  "python.envFile": "${workspaceFolder}/.env",
+
+  // Console de depuração
+  "debug.console.fontSize": 14,
+
+  // Dicionário personalizado para o corretor ortográfico
   "cSpell.words": [
     "alido",
     "AORUS",
     "Botao",
     "boxlayout",
+    "celerybeat",
     "certifi",
     "composicao",
     "diretorio",
+    "dmypy",
     "docutils",
     "existencia",
     "halign",
@@ -44,12 +68,18 @@
     "kivymd",
     "levelname",
     "linux",
+    "mkdocs",
     "mypy",
     "naoexiste",
     "pluggy",
     "Pygments",
+    "pypirc",
+    "pytype",
     "rootdir",
+    "ropeproject",
     "saida",
+    "spyderproject",
+    "spyproject",
     "urllib",
     "Usuario",
     "validacao",
