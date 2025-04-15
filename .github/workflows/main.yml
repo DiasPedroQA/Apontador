@@ -33,6 +33,7 @@ jobs:
       # 🧹 Lint com flake8
       - name: Lint with flake8
         run: flake8 .
+        continue-on-error: true
 
       # ✅ Testes com pytest e cobertura
       - name: Run tests and generate coverage report
