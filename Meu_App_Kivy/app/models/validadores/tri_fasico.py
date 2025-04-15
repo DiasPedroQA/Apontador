@@ -2,93 +2,102 @@
 # pylint: disable=line-too-long, missing-module-docstring
 
 import re
-from abc import ABC, abstractmethod
+
 from typing import TypedDict
 
-from mensagens.mensagens import MENSAGENS
+from app.mensagens.mensageiro import MENSAGENS
 
 
-class ResultadoValidacao(TypedDict):
+class Identidade(TypedDict):
     """
-    Representa o resultado de uma validação de caminho de arquivo/diretório.
+    Representa o resultado da identificação
+    de um caminho de arquivo ou diretório.
+
+    A estrutura contém o caminho informado,
+    o sistema operacional identificado,
+    se o caminho é sintaticamente válido
+    e uma mensagem explicativa.
     """
-    caminho_entrada: str  # Caminho informado pelo usuário
-    sistema: str          # Sistema identificado (Windows, Mac, Linux, etc.)
-    valido: bool          # Indica se o caminho é sintaticamente válido
-    mensagem: str         # Mensagem explicativa do resultado da validação
+    caminho_entrada: str
+    sistema_operacional: str
+    identificado: bool
+    mensagem: str
 
 
-class ValidadorSistemaBase(ABC):
+class ValidadorTriFasico:
     """
-    Classe base abstrata para validadores de caminhos por sistema operacional.
-    Cada classe filha deve definir:
-    - Nome do sistema (`NOME_SISTEMA`)
-    - Regex de validação de caminhos (`REGEX_CAMINHO`)
-    - Caracteres proibidos (`CARACTERES_PROIBIDOS`)
+    Responsável por identificar e validar caminhos de arquivos/diretórios
+    com base em padrões específicos dos sistemas operacionais:
+    Windows, Linux e macOS.
     """
 
-    NOME_SISTEMA: str
-    REGEX_CAMINHO: str
-    CARACTERES_PROIBIDOS: str = ""
+    REGRAS = {
+        "Windows": {
+            "regex": r"^[a-zA-Z]:\\(?:[^\\/:*?\"<>|\r\n]+\\)*[^\\/:*?\"<>|\r\n]*$",
+            "caracteres_proibidos": '<>:"/\\|?*',
+        },
+        "Linux": {
+            "regex": r"^/([a-zA-Z0-9._-]+/?)*$",
+            "caracteres_proibidos": "\0",
+        },
+        "Mac": {
+            "regex": r"^/([a-zA-Z0-9._ -]+/?)*$",
+            "caracteres_proibidos": ":",
+        },
+    }
 
     @classmethod
-    def validar(cls, caminho: str) -> ResultadoValidacao:
+    def identificar(cls, caminho: str) -> Identidade:
         """
-        Valida um caminho com base nas regras do sistema específico.
-
-        1. Verifica caracteres proibidos.
-        2. Verifica correspondência com a regex do sistema.
-        3. Retorna mensagem adequada com o resultado.
+        Identifica o sistema operacional e valida a estrutura do caminho.
 
         Args:
-            caminho (str): Caminho a ser validado.
+            caminho (str): Caminho informado pelo usuário.
 
         Returns:
-            ResultadoValidacao: Resultado com informações da validação.
+            Identidade: Resultado com sistema identificado, validade
+                        e mensagem explicativa.
         """
-        if any(char in caminho for char in cls.CARACTERES_PROIBIDOS):
-            return cls._resultado(caminho, False, MENSAGENS["caracteres_proibidos"])
+        for sistema, regras in cls.REGRAS.items():
+            if any(char in caminho for char in regras["caracteres_proibidos"]):
+                return cls._resultado(
+                    caminho,
+                    sistema,
+                    False,
+                    MENSAGENS["validação"]["caracteres_proibidos"].format(
+                        caminho=caminho
+                    )
+                )
 
-        if re.match(cls.REGEX_CAMINHO, caminho):
-            return cls._resultado(caminho, True, MENSAGENS["caminho_valido"])
+            if re.fullmatch(regras["regex"], caminho):
+                return cls._resultado(
+                    caminho,
+                    sistema,
+                    True,
+                    MENSAGENS["validação"]["caminho_identificado"].format(
+                        caminho=caminho
+                    )
+                )
 
-        return cls._resultado(caminho, False, MENSAGENS["caminho_invalido"])
+        return cls._resultado(
+            caminho,
+            "Desconhecido",
+            False,
+            MENSAGENS["validação"]["sistema_desconhecido"].format(
+                caminho=caminho
+            )
+        )
 
-    @classmethod
-    def _resultado(cls, caminho: str, valido: bool, mensagem: str) -> ResultadoValidacao:
-        """
-        Monta o dicionário do resultado da validação.
-        """
+    @staticmethod
+    def _resultado(
+        caminho: str,
+        sistema_operacional: str,
+        identificado: bool,
+        mensagem: str
+    ) -> Identidade:
         return {
             "caminho_entrada": caminho,
-            "sistema": cls.NOME_SISTEMA,
-            "valido": valido,
+            "sistema_operacional": sistema_operacional,
+            "identificado": identificado,
             "mensagem": mensagem,
         }
-
-
-class ValidadorMac(ValidadorSistemaBase):
-    """
-    Validador de caminhos para o sistema macOS.
-    """
-    NOME_SISTEMA = "Mac"
-    REGEX_CAMINHO = r"^/([a-zA-Z0-9._ -]+/?)*$"
-    CARACTERES_PROIBIDOS = ":"
-
-
-class ValidadorLinux(ValidadorSistemaBase):
-    """
-    Validador de caminhos para o sistema Linux.
-    """
-    NOME_SISTEMA = "Linux"
-    REGEX_CAMINHO = r"^/([a-zA-Z0-9._-]+/?)*$"
-    CARACTERES_PROIBIDOS = "\0"  # NULL byte
-
-
-class ValidadorWindows(ValidadorSistemaBase):
-    """
-    Validador de caminhos para o sistema Windows.
-    """
-    NOME_SISTEMA = "Windows"
-    REGEX_CAMINHO = r"^[a-zA-Z]:\\(?:[^\\/:*?\"<>|\r\n]+\\)*[^\\/:*?\"<>|\r\n]*$"
-    CARACTERES_PROIBIDOS = '<>:"/\\|?*'

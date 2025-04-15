@@ -1,47 +1,47 @@
 # -*- coding: utf-8 -*-
 """
-TelaValidador - Tela principal de entrada e validação de caminhos.
+TelaIdentificador - Tela principal de entrada e identificação de caminhos.
 
 Este módulo define a tela gráfica da aplicação onde o usuário pode
-inserir e validar caminhos de arquivos ou diretórios com base no sistema
+inserir e identificar caminhos de arquivos ou diretórios com base no sistema
 operacional detectado.
 
-Autor: Seu Nome (opcional)
-Data: AAAA-MM-DD
+Autor: Pedro P. M. Dias
+Data: 2025-01-01
 """
 
-# pylint: disable=invalid-name, line-too-long, no-else-return, import-error, too-few-public-methods, too-many-ancestors  # noqa: E501
+# pylint: disable=line-too-long, no-else-return, import-error, too-few-public-methods, too-many-ancestors  # noqa: E501
 
 
-from controller.caminho_controller import CaminhoController
+from app.controller.caminho_controller import CaminhoController
 from kivy.lang import Builder
 from kivymd.uix.screen import MDScreen
 
-Builder.load_file("app/view/tela_validador.kv")
+Builder.load_file("app/view/tela_identificador.kv")
 
 
-class TelaValidador(MDScreen):
+class TelaIdentificador(MDScreen):
     """
-        Tela de Validação de Caminhos.
+        Tela de Identificação de Caminhos.
 
         Esta tela permite ao usuário inserir um caminho de arquivo ou diretório
-        e validar se ele é válido para o sistema operacional atual.
+        e identificar se ele é válido para o sistema operacional atual.
     """
     def __init__(self, controller: CaminhoController, **kwargs):
         """
-            Inicializa a tela de validação de caminhos.
+            Inicializa a tela de identificação de caminhos.
 
             Args:
                 controller (CaminhoController): Controlador responsável pela
-                    validação de caminhos.
+                    identificação de caminhos.
                 **kwargs: Argumentos adicionais para a classe pai.
         """
         super().__init__(**kwargs)
         self.controller = controller
 
-    def validar_caminho(self):
+    def identificar_caminho(self):
         """
-            Valida o caminho de entrada fornecido pelo usuário.
+            Identifica o caminho de entrada fornecido pelo usuário.
         """
         caminho_entrada = self.ids.entrada_caminho.text.strip()
 
@@ -52,14 +52,14 @@ class TelaValidador(MDScreen):
             )
             return
 
-        resultado = self.controller.validar(caminho_entrada=caminho_entrada)
+        resultado = self.controller.identificar(caminho_entrada=caminho_entrada)
 
-        cor = "[color=00ff00]" if resultado["valido"] else "[color=ff0000]"
-        valido_texto = f"{cor}{'Sim' if resultado['valido'] else 'Não'}[/color]"
+        cor = "[color=00ff00]" if resultado["identifico"] else "[color=ff0000]"
+        identifico_texto = f"{cor}{'Sim' if resultado['identifico'] else 'Não'}[/color]"
 
         self.ids.resultado_label.text = (
             f"[b]Caminho:[/b] {resultado['caminho_entrada']}\n"
             f"[b]Sistema:[/b] {resultado['sistema']}\n"
-            f"[b]Válido:[/b] {valido_texto}\n"
+            f"[b]Válido:[/b] {identifico_texto}\n"
             f"[b]Mensagem:[/b] {resultado['mensagem']}"
         )

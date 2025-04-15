@@ -10,8 +10,8 @@
         width: "220dp"
         on_release: root.ação()
 
-<TelaValidador>:
-    name: "validador_sistemas_operacionais"
+<TelaIdentificador>:
+    name: "identificador_sistemas_operacionais"
 
     MDBoxLayout:
         orientation: "vertical"
@@ -20,7 +20,7 @@
         md_bg_color: app.theme_cls.bg_normal
 
         MDTopAppBar:
-            title: "Validador de Sistemas Operacionais"
+            title: "Identificador de Sistemas Operacionais"
             md_bg_color: app.theme_cls.primary_color
             specific_text_color: 1, 1, 1, 1
             left_action_items: [["folder", lambda x: None]]
@@ -56,7 +56,7 @@
                     icon_left: "file"
 
                 MDRaisedButton:
-                    text: "Validar Caminho"
+                    text: "Identificar Caminho"
                     icon: "check-bold"
                     size_hint_x: None
                     width: "220dp"
@@ -65,11 +65,11 @@
                     pos_hint: {"center_x": 0.5}
                     md_bg_color: app.theme_cls.primary_light
                     text_color: 1, 1, 1, 1
-                    on_release: root.validar_caminho()
+                    on_release: root.identificar_caminho()
 
         MDLabel:
             id: resultado_label
-            text: "Digite um caminho e clique em 'Validar Caminho'."
+            text: "Digite um caminho e clique em 'Identificar Caminho'."
             halign: "left"
             markup: True
             size_hint_x: 1

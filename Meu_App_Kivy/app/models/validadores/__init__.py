@@ -15,18 +15,9 @@
         - `validar_mac`: Validation function for MAC addresses.
 """
 
-from .validador_mac import ValidadorMac
-from .validador_posix import ValidadorLinux
-from .validador_windows import ValidadorWindows
-
-VALIDADORES = {
-    "Windows": ValidadorWindows(),
-    "Mac": ValidadorMac(),
-    "Linux": ValidadorLinux(),
-}
+from .tri_fasico import Identidade, ValidadorTriFasico
 
 __all__ = [
-    "ValidadorWindows",
-    "ValidadorLinux",
-    "ValidadorMac",
+    "Identidade",
+    "ValidadorTriFasico",
 ]

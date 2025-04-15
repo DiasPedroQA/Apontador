@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# pylint: disable=missing-module-docstring, missing-class-docstring, missing-function-docstring, invalid-name, line-too-long, no-else-return, invalid-name, import-error  # noqa: E501
+# pylint: disable=missing-module-docstring, missing-class-docstring, missing-function-docstring, line-too-long, no-else-return, import-error  # noqa: E501
 
 # -*- coding: utf-8 -*-
 
@@ -52,7 +52,7 @@ class InspecionadorCaminho:
             "caminho_normalizado": str(caminho),
             "existe": caminho.exists(),
             "e_arquivo": caminho.is_file(),
-            "e_diretorio": caminho.is_dir(),
+            "e_diretório": caminho.is_dir(),
             "nome": caminho.name,
             "pasta_mae": str(caminho.parent),
             "sufixo": caminho.suffix,

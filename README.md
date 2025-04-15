@@ -1,6 +1,6 @@
 # 📁 Apontador
 
-**Apontador** é um aplicativo multiplataforma desenvolvido com **Kivy** e **KivyMD**, utilizando os princípios de **TDD (Test-Driven Development)** e arquitetura **MVC (Model-View-Controller)**. O objetivo do projeto é oferecer uma ferramenta gráfica capaz de **validar, analisar e manipular caminhos de arquivos e diretórios**, reconhecendo automaticamente o sistema operacional ao qual o caminho pertence (Windows, Linux ou macOS), e aplicando as regras apropriadas de validação e sanitização.
+**Apontador** é um aplicativo multiplataforma desenvolvido com **Kivy** e **KivyMD**, utilizando os princípios de **TDD (Test-Driven Development)** e arquitetura **MVC (Model-View-Controller)**. O objetivo do projeto é oferecer uma ferramenta gráfica capaz de **identificar, analisar e manipular caminhos de arquivos e diretórios**, reconhecendo automaticamente o sistema operacional ao qual o caminho pertence (Windows, Linux ou macOS), e aplicando as regras apropriadas de identificação e sanitização.
 
 ---
 
@@ -9,7 +9,7 @@
 Criar um analisador robusto de caminhos com:
 
 - Detecção automática do sistema operacional a partir da string do caminho.
-- Validação sintática e semântica de caminhos.
+- Identificação sintática e semântica de caminhos.
 - Mensagens claras de erro e sucesso.
 - Interface gráfica amigável com KivyMD.
 - Arquitetura modular com boas práticas de engenharia de software.
@@ -23,8 +23,8 @@ O projeto segue a arquitetura **MVC** com separação clara das responsabilidade
 ```plain-text
 app/
 ├── controllers/         # Controladores que conectam view e model
-├── models/              # Modelos, validadores e lógica de negócio
-│   ├── validadores/     # Validadores específicos por sistema
+├── models/              # Modelos, identificadores e lógica de negócio
+│   ├── identificadores/     # Identificadores específicos por sistema
 ├── utils/               # Utilitários auxiliares
 ├── views/               # Interface gráfica com arquivos .kv e Python
 ├── main.py              # Ponto de entrada do aplicativo
@@ -38,9 +38,9 @@ tests/                   # Testes automatizados com pytest
 O projeto é construído com foco em **Test-Driven Development**:
 
 - Cobertura de testes com `pytest` e `pytest-cov`.
-- Testes unitários para cada validador, controlador e utilitário.
+- Testes unitários para cada identificador, controlador e utilitário.
 - Parametrização e uso de `mock` para simular ambientes.
-- Meta: alcançar 100% de cobertura de código em componentes críticos (`validador.py`, `controller`, `main`).
+- Meta: alcançar 100% de cobertura de código em componentes críticos (`identificador.py`, `controller`, `main`).
 
 ---
 

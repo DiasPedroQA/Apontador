@@ -17,7 +17,6 @@
 
   // Exclusões de arquivos e diretórios na árvore de arquivos
   "files.exclude": {
-    "**/.venv": true,
     "**/.mypy_cache/": true,
     "**/.pytest_cache/": true,
     "**/*.pyc": true,
@@ -47,49 +46,13 @@
 
   // Dicionário personalizado para o corretor ortográfico
   "cSpell.words": [
-    "alido",
-    "AORUS",
-    "botao",
     "Botao",
-    "boxlayout",
-    "celerybeat",
-    "certifi",
-    "composicao",
     "diretorio",
-    "dmypy",
-    "docutils",
-    "existencia",
     "fasico",
     "halign",
     "icone",
     "Icone",
-    "idna",
-    "inacessivel",
-    "inicializacao",
-    "iniconfig",
-    "invalidos",
     "kivy",
-    "kivymd",
-    "levelname",
-    "linux",
-    "mkdocs",
-    "mypy",
-    "naoexiste",
-    "permissao",
-    "pluggy",
-    "Pygments",
-    "pypirc",
-    "pytype",
-    "rootdir",
-    "ropeproject",
-    "saida",
-    "spyderproject",
-    "spyproject",
-    "urllib",
-    "Usuario",
-    "validacao",
-    "Validacao",
-    "venv",
-    "verificacao"
+    "kivymd"
   ]
 }

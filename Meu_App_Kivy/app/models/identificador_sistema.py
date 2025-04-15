@@ -1,267 +1,104 @@
 # -*- coding: utf-8 -*-
-
 """
-    validador_caminho.py
+Módulo de identificação de caminhos de arquivos
+com base no sistema operacional identificado.
 
-    Módulo unificado para validação de caminhos
-    de arquivos ou diretórios.
-
-    Este módulo oferece uma estrutura centralizada para:
-        - Identificar o sistema operacional
-        com base no formato do caminho;
-        - Validar o caminho conforme as
-        regras sintáticas do sistema
-        operacional identificado;
-        - Retornar um objeto estruturado
-        contendo os resultados da análise.
-
-    Classes:
-        - ValidadorCaminho: Classe com
-        funcionalidades integradas de identificação
-        e validação de caminhos para
-        Windows, Linux e macOS.
-
-    Tipos:
-        - Sistema: Literal para identificar
-        sistemas conhecidos.
-        - ResultadoValidacao: TypedDict com
-        resultado da validação.
+Este módulo define a classe `IdentificadorCaminho`,
+que utiliza o validador central `ValidadorTriFasico`
+para identificar e validar o caminho fornecido.
 """
-
-# pylint: disable=no-else-return,  # noqa: E501
 
 import re
 from typing import Literal, TypedDict
+from app.models.validadores.tri_fasico import ValidadorTriFasico
 
+# Tipos possíveis de sistema operacional
 Sistema = Literal["Windows", "Linux", "Mac", "desconhecido"]
 
-
-class ResultadoValidacao(TypedDict):
+class Identidade(TypedDict):
     """
-    Representa o resultado de uma validação de caminho.
+        Representa o resultado da identificação de um caminho.
 
-    Atributos:
-        caminho_entrada (str): Caminho informado pelo usuário.
-        sistema (Sistema): Sistema operacional identificado.
-        valido (bool): Se o caminho é sintaticamente válido.
-        mensagem (str): Explicação da validação.
+        Atributos:
+            caminho_entrada (str): Caminho informado pelo usuário.
+            sistema (Sistema): Sistema operacional identificado.
+            identifico (bool): Se o caminho é sintaticamente válido.
+            mensagem (str): Explicação da identificação.
     """
     caminho_entrada: str
     sistema: Sistema
-    valido: bool
+    identifico: bool
     mensagem: str
 
 
-class ValidadorCaminho:
+class IdentificadorCaminho:
     """
-    Classe responsável por identificar o sistema e validar caminhos
-    conforme regras específicas de cada sistema operacional.
+        Classe central para identificação de caminhos com base
+        no sistema operacional inferido a partir do padrão do caminho.
     """
 
     def __init__(self):
-        self.regex_windows = (
-            r"^[a-zA-Z]:\\(?:[^\\/:*?\"<>|\r\n]+\\)*[^\\/:*?\"<>|\r\n]*$"
-        )
-        self.regex_mac = r"^/([a-zA-Z0-9._ -]+/?)*$"
-        self.regex_linux = r"^/([a-zA-Z0-9._-]+/?)*$"
-        self.caracteres_proibidos_windows = r'[<>:"/\\|?*]'
-        self.caracteres_proibidos_linux = r'\0'
-        self.caracteres_proibidos_mac = r':'
+        self.validador = ValidadorTriFasico()
 
-    def identificar_sistema(
-        self,
-        caminho_entrada: str
-    ) -> Sistema:
+    def identificar_sistema(self, caminho: str) -> Sistema:
         """
-        Identifica o sistema operacional
-        com base no formato do caminho.
+            Identifica o sistema operacional a partir do padrão do caminho.
 
-        Args:
-            caminho_entrada (str): Caminho de arquivo
-            ou diretório a ser analisado.
+            Args:
+                caminho (str): Caminho a ser avaliado.
 
-        Returns:
-            Sistema: Um dos seguintes valores:
-                - "Windows": Se o caminho for do Windows.
-                - "Linux": Se o caminho for do Linux.
-                - "Mac": Se o caminho for do macOS.
-                - "desconhecido": Se o sistema não puder ser identificado.
+            Returns:
+                Sistema: Literal representando o sistema inferido.
         """
-        if re.match(r"^[a-zA-Z]:\\", caminho_entrada):
+        if re.match(r"^[a-zA-Z]:\\", caminho):
             return "Windows"
-        elif re.match(
-            r"^/(Users|Volumes|System/Volumes/Data)",
-            caminho_entrada
-        ):
+        elif re.match(r"^/(Users|Volumes|System/Volumes/Data)", caminho):
             return "Mac"
-        elif re.match(
-            r"^/(?!Users|Volumes|System/Volumes/Data)",
-            caminho_entrada
-        ):
+        elif re.match(r"^/(?!Users|Volumes|System/Volumes/Data)", caminho):
             return "Linux"
         return "desconhecido"
 
-    def validar_caminho(
-        self,
-        caminho_entrada: str
-    ) -> ResultadoValidacao:
+    def identificar_caminho(self, caminho_entrada: str) -> Identidade:
         """
-        Valida um caminho de acordo com o sistema operacional detectado.
+            Identifica e valida o caminho utilizando o `ValidadorTriFasico`.
 
-        Args:
-            caminho_entrada (str): Caminho informado.
+            Args:
+                caminho_entrada (str): Caminho informado pelo usuário.
 
-        Returns:
-            ResultadoValidacao: Estrutura com detalhes da validação.
+            Returns:
+                Identidade: Resultado detalhado da identificação.
         """
         caminho = caminho_entrada.strip()
         sistema = self.identificar_sistema(caminho)
 
         if not caminho:
-            return self._resultado(
-                caminho, sistema, False, "O caminho está vazio."
-            )
+            return self._resultado(caminho, sistema, False, "O caminho está vazio.")
 
-        if sistema == "Windows":
-            return self._validar_windows(caminho)
-        elif sistema == "Mac":
-            return self._validar_mac(caminho)
-        elif sistema == "Linux":
-            return self._validar_linux(caminho)
-        else:
-            return self._resultado(
-                caminho, sistema, False, "Formato de caminho desconhecido."
-            )
-
-    def _validar_windows(
-        self,
-        caminho_entrada: str
-    ) -> ResultadoValidacao:
-        """
-        Valida um caminho específico para Windows.
-
-        Args:
-            caminho_entrada (str): Caminho de arquivo ou
-            diretório a ser validado.
-
-        Returns:
-            ResultadoValidacao: Resultado da validação.
-        """
-        if re.search(
-            self.caracteres_proibidos_windows,
-            caminho_entrada
-        ):
-            return self._resultado(
-                caminho_entrada,
-                "Windows",
-                False,
-                "Caminho contém caracteres proibidos."
-            )
-
-        if re.match(self.regex_windows, caminho_entrada):
-            return self._resultado(
-                caminho_entrada, "Windows", True, "Caminho válido."
-            )
-
-        return self._resultado(
-            caminho_entrada, "Windows", False, "Caminho inválido."
-        )
-
-    def _validar_mac(
-        self,
-        caminho_entrada: str
-    ) -> ResultadoValidacao:
-        """
-        Valida um caminho específico para macOS.
-
-        Args:
-            caminho_entrada (str): Caminho de arquivo ou diretório a ser validado.
-
-        Returns:
-            ResultadoValidacao: Resultado da validação.
-        """
-        if re.search(self.caracteres_proibidos_mac, caminho_entrada):
-            return self._resultado(
-                caminho_entrada,
-                "Mac",
-                False,
-                "Caminho contém caracteres proibidos."
-            )
-
-        if re.match(self.regex_mac, caminho_entrada):
-            return self._resultado(
-                caminho_entrada, "Mac", True, "Caminho válido."
-            )
-
-        return self._resultado(
-            caminho_entrada, "Mac", False, "Caminho inválido."
-        )
-
-    def _validar_linux(
-        self,
-        caminho_entrada: str
-    ) -> ResultadoValidacao:
-        """
-        Valida um caminho específico para Linux.
-
-        Args:
-            caminho_entrada (str): Caminho de arquivo
-            ou diretório a ser validado.
-
-        Returns:
-            ResultadoValidacao: Resultado da validação.
-        """
-        if re.search(
-            self.caracteres_proibidos_linux,
-            caminho_entrada
-        ):
-            return self._resultado(
-                caminho_entrada,
-                "Linux",
-                False,
-                "Caminho contém caracteres proibidos."
-            )
-
-        if re.match(
-            self.regex_linux,
-            caminho_entrada
-        ):
-            return self._resultado(
-                caminho_entrada,
-                "Linux",
-                True,
-                "Caminho válido."
-            )
-
-        return self._resultado(
-            caminho_entrada,
-            "Linux",
-            False,
-            "Caminho inválido."
-        )
+        resultado = self.validador.validar(caminho, sistema)
+        return resultado
 
     def _resultado(
         self,
         caminho: str,
         sistema: Sistema,
-        valido: bool,
+        identifico: bool,
         mensagem: str
-    ) -> ResultadoValidacao:
+    ) -> Identidade:
         """
-        Gera a estrutura padronizada de resultado de validação.
+            Constrói um dicionário padronizado com os dados da identificação.
 
-        Args:
-            caminho (str): Caminho informado.
-            sistema (Sistema): Sistema identificado.
-            valido (bool): Resultado da validação.
-            mensagem (str): Explicação.
+            Args:
+                caminho (str): Caminho analisado.
+                sistema (Sistema): Sistema identificado.
+                identifico (bool): Resultado da validação.
+                mensagem (str): Justificativa ou descrição.
 
-        Returns:
-            ResultadoValidacao: Resultado estruturado.
+            Returns:
+                Identidade: Objeto tipado com os dados do processo.
         """
         return {
             "caminho_entrada": caminho,
             "sistema": sistema,
-            "valido": valido,
+            "identifico": identifico,
             "mensagem": mensagem
         }

@@ -1,5 +1,5 @@
 import pytest
-from app.models.validadores.tri_fasico import ValidadorMac, ValidadorLinux, ValidadorWindows
+from app.models.identificadores.tri_fasico import IdentificadorMac, IdentificadorLinux, IdentificadorWindows
 
 # -*- coding: utf-8 -*-
 # pylint: disable=missing-module-docstring
@@ -8,99 +8,99 @@ from app.models.validadores.tri_fasico import ValidadorMac, ValidadorLinux, Vali
 # Mock messages for testing
 MENSAGENS = {
     "caracteres_proibidos": "O caminho contém caracteres proibidos.",
-    "caminho_valido": "O caminho é válido.",
-    "caminho_invalido": "O caminho é inválido.",
+    "caminho_identifico": "O caminho é válido.",
+    "caminho_identificado": "O caminho é inválido.",
 }
 
 @pytest.mark.parametrize(
-    "validador, caminho, esperado",
+    "identificador, caminho, esperado",
     [
-        # Testes para ValidadorMac
+        # Testes para IdentificadorMac
         (
-            ValidadorMac,
+            IdentificadorMac,
             "/Users/teste/arquivo.txt",
             {
-                "valido": True,
-                "mensagem": MENSAGENS["caminho_valido"]
+                "identifico": True,
+                "mensagem": MENSAGENS["caminho_identifico"]
             }
         ),
         (
-            ValidadorMac,
-            "/Users/teste/arquivo:invalido.txt",
+            IdentificadorMac,
+            "/Users/teste/arquivo:identificado.txt",
             {
-                "valido": False,
+                "identifico": False,
                 "mensagem": MENSAGENS["caracteres_proibidos"]
             }
         ), (
-            ValidadorMac,
+            IdentificadorMac,
             "C:\\Users\\teste",
             {
-                "valido": False,
-                "mensagem": MENSAGENS["caminho_invalido"]
+                "identifico": False,
+                "mensagem": MENSAGENS["caminho_identificado"]
             }
         ),
         
-        # Testes para ValidadorLinux
+        # Testes para IdentificadorLinux
         (
-            ValidadorLinux,
+            IdentificadorLinux,
             "/home/teste/arquivo.txt",
             {
-                "valido": True,
-                "mensagem": MENSAGENS["caminho_valido"]
+                "identifico": True,
+                "mensagem": MENSAGENS["caminho_identifico"]
             }
         ), (
-            ValidadorLinux,
-            "/home/teste/arquivo\0invalido.txt",
+            IdentificadorLinux,
+            "/home/teste/arquivo\0identificado.txt",
             {
-                "valido": False,
+                "identifico": False,
                 "mensagem": MENSAGENS["caracteres_proibidos"]
             }
         ), (
-            ValidadorLinux,
+            IdentificadorLinux,
             "C:\\Users\\teste",
             {
-                "valido": False,
-                "mensagem": MENSAGENS["caminho_invalido"]
+                "identifico": False,
+                "mensagem": MENSAGENS["caminho_identificado"]
             }
         ),
 
-        # Testes para ValidadorWindows
+        # Testes para IdentificadorWindows
         (
-            ValidadorWindows,
+            IdentificadorWindows,
             "C:\\Users\\teste\\arquivo.txt",
             {
-                "valido": True,
-                "mensagem": MENSAGENS["caminho_valido"]
+                "identifico": True,
+                "mensagem": MENSAGENS["caminho_identifico"]
             }
         ), (
-            ValidadorWindows,
-            "C:\\Users\\teste\\arquivo<invalido>.txt",
+            IdentificadorWindows,
+            "C:\\Users\\teste\\arquivo<identificado>.txt",
             {
-                "valido": False,
+                "identifico": False,
                 "mensagem": MENSAGENS["caracteres_proibidos"]
             }
         ), (
-            ValidadorWindows,
+            IdentificadorWindows,
             "/home/teste/arquivo.txt",
             {
-                "valido": False,
-                "mensagem": MENSAGENS["caminho_invalido"]
+                "identifico": False,
+                "mensagem": MENSAGENS["caminho_identificado"]
             }
         ),
     ],
 )
-def test_validadores(
-    validador,
+def test_identificadores(
+    identificador,
     caminho,
     esperado,
     monkeypatch
 ):
     # Mock MENSAGENS
     monkeypatch.setattr(
-        "app.models.validadores.tri_fasico.MENSAGENS",
+        "app.models.identificadores.tri_fasico.MENSAGENS",
         MENSAGENS
     )
     
-    resultado = validador.validar(caminho)
-    assert resultado["valido"] == esperado["valido"]
+    resultado = identificador.identificar(caminho)
+    assert resultado["identifico"] == esperado["identifico"]
     assert resultado["mensagem"] == esperado["mensagem"]

@@ -1,69 +1,47 @@
 # -*- coding: utf-8 -*-
 """
     Módulo responsável por controlar a lógica de
-    validação de caminhos de arquivos ou diretórios
+    identificação de caminhos de arquivos ou diretórios,
     com base no sistema operacional identificado.
 
     Este módulo define a classe `CaminhoController`,
-    que roteia o caminho informado para o validador
-    adequado (Windows, Linux/POSIX ou macOS),
-    retornando o resultado padronizado com base nas
-    regras específicas de cada sistema.
+    que utiliza o `IdentificadorCaminho` para identificar
+    e validar caminhos, retornando um resultado padronizado.
 """
 
-# pylint: disable=import-error, line-too-long, too-few-public-methods, too-many-ancestors, no-else-return  # noqa: E501
+# pylint: disable=import-error, line-too-long, too-few-public-methods, no-else-return  # noqa: E501
 
-from mensagens.mensagens import MENSAGENS
-
-from models.identificador_sistema import identificar_sistema
-
-from models.tipos_validacao import ResultadoValidacao
-
-from models.validadores import (
-    validador_mac,
-    validador_posix,
-    validador_windows
-)
+from app.mensagens.mensageiro import MENSAGENS
+from app.models.identificador_sistema import IdentificadorCaminho, Identidade
 
 
 class CaminhoController:
     """
-        Classe responsável por validar caminhos de arquivos e diretórios
-        em diferentes sistemas operacionais.
+        Classe responsável por controlar a identificação de caminhos de
+        arquivos e diretórios em diferentes sistemas operacionais.
     """
 
-    def validar(self, caminho_entrada: str) -> ResultadoValidacao:
-        """
-            Valida o caminho de entrada com base no
-            sistema operacional identificado.
+    def __init__(self) -> None:
+        self.identificador = IdentificadorCaminho()
 
-            A função utiliza identificadores e validadores
-            específicos para os sistemas Windows,
-            Linux (POSIX) e macOS, retornando um dicionário
-            com o resultado.
+    def identificar(self, caminho_entrada: str) -> Identidade:
+        """
+            Identifica e valida um caminho informado, retornando os dados
+            padronizados de identificação.
 
             Args:
-                caminho_entrada (str): Caminho do sistema
-                de arquivos a ser analisado.
+                caminho_entrada (str): Caminho do sistema de arquivos a ser analisado.
 
             Returns:
-                ResultadoValidacao: Dicionário contendo
-                o caminho analisado, o sistema operacional
-                identificado, se o caminho é válido,
-                e uma mensagem associada ao resultado.
+                Identidade: Dicionário contendo o caminho analisado, o sistema
+                identificado, a validade e a mensagem associada.
         """
-        sistema = identificar_sistema(caminho_entrada)
-
-        if sistema == "Windows":
-            return validador_windows.validar(caminho_entrada)
-        elif sistema == "Linux":
-            return validador_posix.validar(caminho_entrada)
-        elif sistema == "Mac":
-            return validador_mac.validar(caminho_entrada)
-        else:
+        if not caminho_entrada.strip():
             return {
-                "caminho_entrada": str(caminho_entrada),
+                "caminho_entrada": caminho_entrada,
                 "sistema": "desconhecido",
-                "valido": False,
-                "mensagem": MENSAGENS["sistema_desconhecido"]
+                "identifico": False,
+                "mensagem": MENSAGENS["validação"]["caminho_vazio"]
             }
+
+        return self.identificador.identificar_caminho(caminho_entrada)
