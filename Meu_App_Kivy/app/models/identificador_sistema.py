@@ -68,12 +68,17 @@ class ValidadorCaminho:
         self.caracteres_proibidos_linux = r'\0'
         self.caracteres_proibidos_mac = r':'
 
-    def identificar_sistema(self, caminho_entrada: str) -> Sistema:
+    def identificar_sistema(
+        self,
+        caminho_entrada: str
+    ) -> Sistema:
         """
-        Identifica o sistema operacional com base no formato do caminho.
+        Identifica o sistema operacional
+        com base no formato do caminho.
 
         Args:
-            caminho_entrada (str): Caminho de arquivo ou diretório a ser analisado.
+            caminho_entrada (str): Caminho de arquivo
+            ou diretório a ser analisado.
 
         Returns:
             Sistema: Um dos seguintes valores:
@@ -84,13 +89,22 @@ class ValidadorCaminho:
         """
         if re.match(r"^[a-zA-Z]:\\", caminho_entrada):
             return "Windows"
-        elif re.match(r"^/(Users|Volumes|System/Volumes/Data)", caminho_entrada):
+        elif re.match(
+            r"^/(Users|Volumes|System/Volumes/Data)",
+            caminho_entrada
+        ):
             return "Mac"
-        elif re.match(r"^/(?!Users|Volumes|System/Volumes/Data)", caminho_entrada):
+        elif re.match(
+            r"^/(?!Users|Volumes|System/Volumes/Data)",
+            caminho_entrada
+        ):
             return "Linux"
         return "desconhecido"
 
-    def validar_caminho(self, caminho_entrada: str) -> ResultadoValidacao:
+    def validar_caminho(
+        self,
+        caminho_entrada: str
+    ) -> ResultadoValidacao:
         """
         Valida um caminho de acordo com o sistema operacional detectado.
 
@@ -119,17 +133,24 @@ class ValidadorCaminho:
                 caminho, sistema, False, "Formato de caminho desconhecido."
             )
 
-    def _validar_windows(self, caminho_entrada: str) -> ResultadoValidacao:
+    def _validar_windows(
+        self,
+        caminho_entrada: str
+    ) -> ResultadoValidacao:
         """
         Valida um caminho específico para Windows.
 
         Args:
-            caminho_entrada (str): Caminho de arquivo ou diretório a ser validado.
+            caminho_entrada (str): Caminho de arquivo ou
+            diretório a ser validado.
 
         Returns:
             ResultadoValidacao: Resultado da validação.
         """
-        if re.search(self.caracteres_proibidos_windows, caminho_entrada):
+        if re.search(
+            self.caracteres_proibidos_windows,
+            caminho_entrada
+        ):
             return self._resultado(
                 caminho_entrada,
                 "Windows",
@@ -146,7 +167,10 @@ class ValidadorCaminho:
             caminho_entrada, "Windows", False, "Caminho inválido."
         )
 
-    def _validar_mac(self, caminho_entrada: str) -> ResultadoValidacao:
+    def _validar_mac(
+        self,
+        caminho_entrada: str
+    ) -> ResultadoValidacao:
         """
         Valida um caminho específico para macOS.
 
@@ -173,17 +197,24 @@ class ValidadorCaminho:
             caminho_entrada, "Mac", False, "Caminho inválido."
         )
 
-    def _validar_linux(self, caminho_entrada: str) -> ResultadoValidacao:
+    def _validar_linux(
+        self,
+        caminho_entrada: str
+    ) -> ResultadoValidacao:
         """
         Valida um caminho específico para Linux.
 
         Args:
-            caminho_entrada (str): Caminho de arquivo ou diretório a ser validado.
+            caminho_entrada (str): Caminho de arquivo
+            ou diretório a ser validado.
 
         Returns:
             ResultadoValidacao: Resultado da validação.
         """
-        if re.search(self.caracteres_proibidos_linux, caminho_entrada):
+        if re.search(
+            self.caracteres_proibidos_linux,
+            caminho_entrada
+        ):
             return self._resultado(
                 caminho_entrada,
                 "Linux",
@@ -191,13 +222,22 @@ class ValidadorCaminho:
                 "Caminho contém caracteres proibidos."
             )
 
-        if re.match(self.regex_linux, caminho_entrada):
+        if re.match(
+            self.regex_linux,
+            caminho_entrada
+        ):
             return self._resultado(
-                caminho_entrada, "Linux", True, "Caminho válido."
+                caminho_entrada,
+                "Linux",
+                True,
+                "Caminho válido."
             )
 
         return self._resultado(
-            caminho_entrada, "Linux", False, "Caminho inválido."
+            caminho_entrada,
+            "Linux",
+            False,
+            "Caminho inválido."
         )
 
     def _resultado(
