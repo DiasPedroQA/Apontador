@@ -3,7 +3,7 @@ from unittest.mock import patch
 from app.models.validadores.tri_fasico import ValidadorTriFasico
 
 # -*- coding: utf-8 -*-
-# pylint: disable=missing-module-docstring
+# pylint: disable=import-error, line-too-long, too-few-public-methods, no-else-return  # noqa: E501
 
 
 @pytest.fixture

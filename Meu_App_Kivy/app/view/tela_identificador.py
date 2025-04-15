@@ -55,7 +55,13 @@ class TelaIdentificador(MDScreen):
         resultado = self.controller.identificar(caminho_entrada=caminho_entrada)
 
         cor = "[color=00ff00]" if resultado["identifico"] else "[color=ff0000]"
-        identifico_texto = f"{cor}{'Sim' if resultado['identifico'] else 'Não'}[/color]"
+        identifico_texto = str(
+            f"{cor}{
+                'Sim'
+                if resultado['identifico']
+                else 'Não'
+            }[/color]"
+        )
 
         self.ids.resultado_label.text = (
             f"[b]Caminho:[/b] {resultado['caminho_entrada']}\n"

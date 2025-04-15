@@ -22,13 +22,31 @@ from app.utils.utils_validacao import (
             }
         ),
         (
-            "C:\\Windows\\System32", {"existe": Path("C:\\Windows\\System32").exists(), "e_arquivo": False, "e_diretório": True, "sistema": "Windows"}
+            "C:\\Windows\\System32",
+            {
+                "existe": Path("C:\\Windows\\System32").exists(),
+                "e_arquivo": False,
+                "e_diretório": True,
+                "sistema": "Windows"
+            }
         ),
         (
-            "/home/user", {"existe": Path("/home/user").exists(), "e_arquivo": False, "e_diretório": True, "sistema": "Linux"}
+            "/home/user",
+            {
+                "existe": Path("/home/user").exists(),
+                "e_arquivo": False,
+                "e_diretório": True,
+                "sistema": "Linux"
+            }
         ),
         (
-            "invalid_path", {"existe": False, "e_arquivo": False, "e_diretório": False, "sistema": "Desconhecido"}
+            "invalid_path",
+            {
+                "existe": False,
+                "e_arquivo": False,
+                "e_diretório": False,
+                "sistema": "Desconhecido"
+            }
         ),
     ],
 )
@@ -36,7 +54,9 @@ def test_inspecionar(caminho_entrada, esperado):
     resultado = InspecionadorCaminho.inspecionar(caminho_entrada)
 
     assert resultado["caminho_original"] == caminho_entrada
-    assert resultado["caminho_normalizado"] == str(Path(caminho_entrada).resolve())
+    assert resultado["caminho_normalizado"] == str(
+        Path(caminho_entrada).resolve()
+    )
     assert resultado["existe"] == esperado["existe"]
     assert resultado["e_arquivo"] == esperado["e_arquivo"]
     assert resultado["e_diretório"] == esperado["e_diretório"]

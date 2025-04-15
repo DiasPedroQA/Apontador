@@ -10,13 +10,13 @@ from app.mensagens.mensageiro import MENSAGENS
 
 class Identidade(TypedDict):
     """
-    Representa o resultado da identificação
-    de um caminho de arquivo ou diretório.
+        Representa o resultado da identificação
+        de um caminho de arquivo ou diretório.
 
-    A estrutura contém o caminho informado,
-    o sistema operacional identificado,
-    se o caminho é sintaticamente válido
-    e uma mensagem explicativa.
+        A estrutura contém o caminho informado,
+        o sistema operacional identificado,
+        se o caminho é sintaticamente válido
+        e uma mensagem explicativa.
     """
     caminho_entrada: str
     sistema_operacional: str
@@ -26,9 +26,9 @@ class Identidade(TypedDict):
 
 class ValidadorTriFasico:
     """
-    Responsável por identificar e validar caminhos de arquivos/diretórios
-    com base em padrões específicos dos sistemas operacionais:
-    Windows, Linux e macOS.
+        Responsável por identificar e validar caminhos de arquivos/diretórios
+        com base em padrões específicos dos sistemas operacionais:
+        Windows, Linux e macOS.
     """
 
     REGRAS = {
@@ -49,17 +49,20 @@ class ValidadorTriFasico:
     @classmethod
     def identificar(cls, caminho: str) -> Identidade:
         """
-        Identifica o sistema operacional e valida a estrutura do caminho.
+            Identifica o sistema operacional e valida a estrutura do caminho.
 
-        Args:
-            caminho (str): Caminho informado pelo usuário.
+            Args:
+                caminho (str): Caminho informado pelo usuário.
 
-        Returns:
-            Identidade: Resultado com sistema identificado, validade
+            Returns:
+                Identidade: Resultado com sistema identificado, validade
                         e mensagem explicativa.
         """
         for sistema, regras in cls.REGRAS.items():
-            if any(char in caminho for char in regras["caracteres_proibidos"]):
+            if any(
+                char in caminho
+                for char in regras["caracteres_proibidos"]
+            ):
                 return cls._resultado(
                     caminho,
                     sistema,

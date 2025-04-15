@@ -48,8 +48,12 @@ def test_identificar_caminho_valido(tela_identificador, mock_controller):
     tela_identificador.ids["entrada_caminho"].text = "/path/to/file"
     tela_identificador.identificar_caminho()
 
-    assert tela_identificador.ids["resultado_label"].text.startswith("[b]Caminho:[/b] /path/to/file")
-    mock_controller.identificar.assert_called_once_with(caminho_entrada="/path/to/file")
+    assert tela_identificador.ids["resultado_label"].text.startswith(
+        "[b]Caminho:[/b] /path/to/file"
+    )
+    mock_controller.identificar.assert_called_once_with(
+        caminho_entrada="/path/to/file"
+    )
 
 
 def test_identificar_caminho_vazio(tela_identificador):
@@ -59,7 +63,9 @@ def test_identificar_caminho_vazio(tela_identificador):
     tela_identificador.ids["entrada_caminho"].text = ""
     tela_identificador.identificar_caminho()
 
-    assert "[b]Erro:[/b] O campo de entrada" in tela_identificador.ids["resultado_label"].text
+    assert "[b]Erro:[/b] O campo de entrada" in tela_identificador.ids[
+        "resultado_label"
+    ].text
 
 
 def test_identificar_caminho_invalido(tela_identificador, mock_controller):
@@ -75,6 +81,12 @@ def test_identificar_caminho_invalido(tela_identificador, mock_controller):
     tela_identificador.ids["entrada_caminho"].text = "/invalid/path"
     tela_identificador.identificar_caminho()
 
-    assert "[b]Caminho:[/b] /invalid/path" in tela_identificador.ids["resultado_label"].text
-    assert "[color=ff0000]Não[/color]" in tela_identificador.ids["resultado_label"].text
-    mock_controller.identificar.assert_called_once_with(caminho_entrada="/invalid/path")
+    assert "[b]Caminho:[/b] /invalid/path" in tela_identificador.ids[
+        "resultado_label"
+    ].text
+    assert "[color=ff0000]Não[/color]" in tela_identificador.ids[
+        "resultado_label"
+    ].text
+    mock_controller.identificar.assert_called_once_with(
+        caminho_entrada="/invalid/path"
+    )

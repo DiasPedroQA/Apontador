@@ -1,6 +1,5 @@
 # pylint: disable=line-too-long
 # flake8: noqa E501
-# app/mensagens/mensagens.py
 
 """
     Este módulo define um dicionário chamado `MENSAGENS`

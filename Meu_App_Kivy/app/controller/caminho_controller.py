@@ -12,7 +12,10 @@
 # pylint: disable=import-error, line-too-long, too-few-public-methods, no-else-return  # noqa: E501
 
 from app.mensagens.mensageiro import MENSAGENS
-from app.models.identificador_sistema import IdentificadorCaminho, Identidade
+from app.models.identificador_sistema import (
+    IdentificadorCaminho,
+    Identidade
+)
 
 
 class CaminhoController:

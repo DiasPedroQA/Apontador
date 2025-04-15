@@ -4,7 +4,10 @@ from app.models.identificador_sistema import IdentificadorCaminho, Identidade
 
 @pytest.fixture
 def identificador():
-    """Fixture to create an instance of IdentificadorCaminho with a mocked ValidadorTriFasico."""
+    """
+        Fixture to create an instance of IdentificadorCaminho
+        with a mocked ValidadorTriFasico.
+    """
     identificador = IdentificadorCaminho()
     identificador.validador = MagicMock()
     return identificador
