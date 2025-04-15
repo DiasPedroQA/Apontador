@@ -20,9 +20,10 @@
     "**/.venv": true,
     "**/.mypy_cache/": true,
     "**/.pytest_cache/": true,
-    "**/__pycache__/": true,
     "**/*.pyc": true,
-    "**/.git": true
+    "**/.git": true,
+    "**/__pycache__/": true,
+    "**/__init__.py": true
   },
 
   // Ajustes de editor e interface
@@ -48,6 +49,7 @@
   "cSpell.words": [
     "alido",
     "AORUS",
+    "botao",
     "Botao",
     "boxlayout",
     "celerybeat",
@@ -57,10 +59,12 @@
     "dmypy",
     "docutils",
     "existencia",
+    "fasico",
     "halign",
     "icone",
     "Icone",
     "idna",
+    "inacessivel",
     "inicializacao",
     "iniconfig",
     "invalidos",
@@ -71,6 +75,7 @@
     "mkdocs",
     "mypy",
     "naoexiste",
+    "permissao",
     "pluggy",
     "Pygments",
     "pypirc",

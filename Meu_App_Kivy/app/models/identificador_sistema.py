@@ -3,26 +3,34 @@
 """
     validador_caminho.py
 
-    Módulo unificado para validação de caminhos de arquivos ou diretórios.
+    Módulo unificado para validação de caminhos
+    de arquivos ou diretórios.
 
     Este módulo oferece uma estrutura centralizada para:
-        - Identificar o sistema operacional com base no formato do caminho;
-        - Validar o caminho conforme as regras sintáticas do sistema operacional identificado;
-        - Retornar um objeto estruturado contendo os resultados da análise.
+        - Identificar o sistema operacional
+        com base no formato do caminho;
+        - Validar o caminho conforme as
+        regras sintáticas do sistema
+        operacional identificado;
+        - Retornar um objeto estruturado
+        contendo os resultados da análise.
 
     Classes:
-        - ValidadorCaminho: Classe com funcionalidades integradas de identificação
-          e validação de caminhos para Windows, Linux e macOS.
+        - ValidadorCaminho: Classe com
+        funcionalidades integradas de identificação
+        e validação de caminhos para
+        Windows, Linux e macOS.
 
     Tipos:
-        - Sistema: Literal para identificar sistemas conhecidos.
-        - ResultadoValidacao: TypedDict com resultado da validação.
+        - Sistema: Literal para identificar
+        sistemas conhecidos.
+        - ResultadoValidacao: TypedDict com
+        resultado da validação.
 """
 
 # pylint: disable=no-else-return,  # noqa: E501
 
 import re
-
 from typing import Literal, TypedDict
 
 Sistema = Literal["Windows", "Linux", "Mac", "desconhecido"]
@@ -51,7 +59,9 @@ class ValidadorCaminho:
     """
 
     def __init__(self):
-        self.regex_windows = r"^[a-zA-Z]:\\(?:[^\\/:*?\"<>|\r\n]+\\)*[^\\/:*?\"<>|\r\n]*$"
+        self.regex_windows = (
+            r"^[a-zA-Z]:\\(?:[^\\/:*?\"<>|\r\n]+\\)*[^\\/:*?\"<>|\r\n]*$"
+        )
         self.regex_mac = r"^/([a-zA-Z0-9._ -]+/?)*$"
         self.regex_linux = r"^/([a-zA-Z0-9._-]+/?)*$"
         self.caracteres_proibidos_windows = r'[<>:"/\\|?*]'
@@ -94,7 +104,9 @@ class ValidadorCaminho:
         sistema = self.identificar_sistema(caminho)
 
         if not caminho:
-            return self._resultado(caminho, sistema, False, "O caminho está vazio.")
+            return self._resultado(
+                caminho, sistema, False, "O caminho está vazio."
+            )
 
         if sistema == "Windows":
             return self._validar_windows(caminho)
@@ -103,7 +115,9 @@ class ValidadorCaminho:
         elif sistema == "Linux":
             return self._validar_linux(caminho)
         else:
-            return self._resultado(caminho, sistema, False, "Formato de caminho desconhecido.")
+            return self._resultado(
+                caminho, sistema, False, "Formato de caminho desconhecido."
+            )
 
     def _validar_windows(self, caminho_entrada: str) -> ResultadoValidacao:
         """
@@ -124,9 +138,13 @@ class ValidadorCaminho:
             )
 
         if re.match(self.regex_windows, caminho_entrada):
-            return self._resultado(caminho_entrada, "Windows", True, "Caminho válido.")
+            return self._resultado(
+                caminho_entrada, "Windows", True, "Caminho válido."
+            )
 
-        return self._resultado(caminho_entrada, "Windows", False, "Caminho inválido.")
+        return self._resultado(
+            caminho_entrada, "Windows", False, "Caminho inválido."
+        )
 
     def _validar_mac(self, caminho_entrada: str) -> ResultadoValidacao:
         """
@@ -147,9 +165,13 @@ class ValidadorCaminho:
             )
 
         if re.match(self.regex_mac, caminho_entrada):
-            return self._resultado(caminho_entrada, "Mac", True, "Caminho válido.")
+            return self._resultado(
+                caminho_entrada, "Mac", True, "Caminho válido."
+            )
 
-        return self._resultado(caminho_entrada, "Mac", False, "Caminho inválido.")
+        return self._resultado(
+            caminho_entrada, "Mac", False, "Caminho inválido."
+        )
 
     def _validar_linux(self, caminho_entrada: str) -> ResultadoValidacao:
         """
@@ -170,9 +192,13 @@ class ValidadorCaminho:
             )
 
         if re.match(self.regex_linux, caminho_entrada):
-            return self._resultado(caminho_entrada, "Linux", True, "Caminho válido.")
+            return self._resultado(
+                caminho_entrada, "Linux", True, "Caminho válido."
+            )
 
-        return self._resultado(caminho_entrada, "Linux", False, "Caminho inválido.")
+        return self._resultado(
+            caminho_entrada, "Linux", False, "Caminho inválido."
+        )
 
     def _resultado(
         self,
