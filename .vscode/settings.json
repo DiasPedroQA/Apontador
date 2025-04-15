@@ -53,6 +53,9 @@
     "icone",
     "Icone",
     "kivy",
-    "kivymd"
+    "kivymd",
+    "linux",
+    "mockado",
+    "validacao"
   ]
 }

@@ -9,7 +9,7 @@ carregando a interface gráfica da tela principal e preparando
 os componentes necessários.
 """
 
-from kivymd.app import MDApp
+from kivymd import MDApp
 from kivy.core.window import Window
 
 from app.view.tela_identificador import TelaIdentificador
