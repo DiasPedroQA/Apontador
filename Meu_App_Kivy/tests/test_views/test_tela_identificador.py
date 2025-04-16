@@ -19,7 +19,7 @@ def mock_controller():
     Fixture para criar um mock do CaminhoController.
     """
     controller = MagicMock()
-    controller.identificar.return_value = {
+    controller.identificar_so_so.return_value = {
         "caminho_entrada": "/path/to/file",
         "sistema": "Linux",
         "identifico": True,
@@ -51,7 +51,7 @@ def test_identificar_caminho_valido(tela_identificador, mock_controller):
     assert tela_identificador.ids["resultado_label"].text.startswith(
         "[b]Caminho:[/b] /path/to/file"
     )
-    mock_controller.identificar.assert_called_once_with(
+    mock_controller.identificar_so_so.assert_called_once_with(
         caminho_entrada="/path/to/file"
     )
 
@@ -72,7 +72,7 @@ def test_identificar_caminho_invalido(tela_identificador, mock_controller):
     """
     Testa o método identificar_caminho com um caminho inválido.
     """
-    mock_controller.identificar.return_value = {
+    mock_controller.identificar_so.return_value = {
         "caminho_entrada": "/invalid/path",
         "sistema": "Linux",
         "identifico": False,
@@ -87,6 +87,6 @@ def test_identificar_caminho_invalido(tela_identificador, mock_controller):
     assert "[color=ff0000]Não[/color]" in tela_identificador.ids[
         "resultado_label"
     ].text
-    mock_controller.identificar.assert_called_once_with(
+    mock_controller.identificar_so.assert_called_once_with(
         caminho_entrada="/invalid/path"
     )

@@ -26,7 +26,7 @@ def test_identificar_caminho_vazio(caminho_controller):
     Testa o caso em que o caminho de entrada está vazio.
     """
     caminho_entrada = ""
-    resultado = caminho_controller.identificar(caminho_entrada)
+    resultado = caminho_controller.identificar_so(caminho_entrada)
 
     assert resultado["caminho_entrada"] == caminho_entrada
     assert resultado["sistema"] == "desconhecido"
@@ -46,7 +46,7 @@ def test_identificar_caminho_valido(caminho_controller):
         "mensagem": "Caminho identificado com sucesso."
     }
 
-    resultado = caminho_controller.identificar(caminho_entrada)
+    resultado = caminho_controller.identificar_so(caminho_entrada)
 
     assert resultado["caminho_entrada"] == caminho_entrada
     assert resultado["sistema"] == "linux"
@@ -66,7 +66,7 @@ def test_identificar_caminho_invalido(caminho_controller):
         "mensagem": "Caminho inválido."
     }
 
-    resultado = caminho_controller.identificar(caminho_entrada)
+    resultado = caminho_controller.identificar_so(caminho_entrada)
 
     assert resultado["caminho_entrada"] == caminho_entrada
     assert resultado["sistema"] == "desconhecido"

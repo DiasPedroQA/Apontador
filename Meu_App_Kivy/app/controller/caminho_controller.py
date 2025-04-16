@@ -27,7 +27,7 @@ class CaminhoController:
     def __init__(self) -> None:
         self.identificador = IdentificadorCaminho()
 
-    def identificar(self, caminho_entrada: str) -> Identidade:
+    def identificar_so(self, caminho_entrada: str) -> Identidade:
         """
             Identifica e valida um caminho informado, retornando os dados
             padronizados de identificação.

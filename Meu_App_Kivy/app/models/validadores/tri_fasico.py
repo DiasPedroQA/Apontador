@@ -47,7 +47,7 @@ class ValidadorTriFasico:
     }
 
     @classmethod
-    def identificar(cls, caminho: str) -> Identidade:
+    def identificar_so(cls, caminho: str) -> Identidade:
         """
             Identifica o sistema operacional e valida a estrutura do caminho.
 

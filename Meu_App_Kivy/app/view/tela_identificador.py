@@ -26,7 +26,7 @@ class TelaIdentificador(MDScreen):
         Esta tela permite ao usuário inserir um caminho de arquivo ou diretório
         e identificar se ele é válido para o sistema operacional atual.
     """
-    def __init__(self, controller: CaminhoController, **kwargs):
+    def __init__(self, controller: CaminhoController, **kwargs) -> None:
         """
             Inicializa a tela de identificação de caminhos.
 
@@ -38,11 +38,11 @@ class TelaIdentificador(MDScreen):
         super().__init__(**kwargs)
         self.controller = controller
 
-    def identificar_caminho(self):
+    def identificar_caminho(self) -> None:
         """
             Identifica o caminho de entrada fornecido pelo usuário.
         """
-        caminho_entrada = self.ids.entrada_caminho.text.strip()
+        caminho_entrada: str = self.ids.entrada_caminho.text.strip()
 
         if not caminho_entrada:
             self.ids.resultado_label.text = (
@@ -51,7 +51,7 @@ class TelaIdentificador(MDScreen):
             )
             return
 
-        resultado = self.controller.identificar(caminho_entrada=caminho_entrada)
+        resultado = self.controller.identificar_so(caminho_entrada=caminho_entrada)
 
         cor = "[color=00ff00]" if resultado["identifico"] else "[color=ff0000]"
         identifico_texto = str(

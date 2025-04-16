@@ -19,7 +19,7 @@ def mensagens_mock():
 @patch("app.models.validadores.tri_fasico.MENSAGENS", new_callable=lambda: mensagens_mock())
 def test_identificar_windows(mock_mensagens):
     caminho = "C:\\Users\\User\\Documents\\file.txt"
-    resultado = ValidadorTriFasico.identificar(caminho)
+    resultado = ValidadorTriFasico.identificar_so(caminho)
     assert resultado["caminho_entrada"] == caminho
     assert resultado["sistema_operacional"] == "Windows"
     assert resultado["identificado"] is True
@@ -28,7 +28,7 @@ def test_identificar_windows(mock_mensagens):
 @patch("app.models.validadores.tri_fasico.MENSAGENS", new_callable=lambda: mensagens_mock())
 def test_identificar_linux(mock_mensagens):
     caminho = "/home/user/documents/file.txt"
-    resultado = ValidadorTriFasico.identificar(caminho)
+    resultado = ValidadorTriFasico.identificar_so(caminho)
     assert resultado["caminho_entrada"] == caminho
     assert resultado["sistema_operacional"] == "Linux"
     assert resultado["identificado"] is True
@@ -37,7 +37,7 @@ def test_identificar_linux(mock_mensagens):
 @patch("app.models.validadores.tri_fasico.MENSAGENS", new_callable=lambda: mensagens_mock())
 def test_identificar_mac(mock_mensagens):
     caminho = "/Users/user/Documents/file.txt"
-    resultado = ValidadorTriFasico.identificar(caminho)
+    resultado = ValidadorTriFasico.identificar_so(caminho)
     assert resultado["caminho_entrada"] == caminho
     assert resultado["sistema_operacional"] == "Mac"
     assert resultado["identificado"] is True
@@ -46,7 +46,7 @@ def test_identificar_mac(mock_mensagens):
 @patch("app.models.validadores.tri_fasico.MENSAGENS", new_callable=lambda: mensagens_mock())
 def test_identificar_caracteres_proibidos(mock_mensagens):
     caminho = "C:\\Users\\User\\Documents\\file<.txt"
-    resultado = ValidadorTriFasico.identificar(caminho)
+    resultado = ValidadorTriFasico.identificar_so(caminho)
     assert resultado["caminho_entrada"] == caminho
     assert resultado["sistema_operacional"] == "Windows"
     assert resultado["identificado"] is False
@@ -55,7 +55,7 @@ def test_identificar_caracteres_proibidos(mock_mensagens):
 @patch("app.models.validadores.tri_fasico.MENSAGENS", new_callable=lambda: mensagens_mock())
 def test_identificar_sistema_desconhecido(mock_mensagens):
     caminho = "invalid_path"
-    resultado = ValidadorTriFasico.identificar(caminho)
+    resultado = ValidadorTriFasico.identificar_so(caminho)
     assert resultado["caminho_entrada"] == caminho
     assert resultado["sistema_operacional"] == "Desconhecido"
     assert resultado["identificado"] is False
