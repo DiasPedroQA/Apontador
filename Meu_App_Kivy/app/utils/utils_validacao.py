@@ -13,10 +13,6 @@ import tempfile
 from pathlib import Path
 import pytest
 
-from app.utils.utils_validacao import (
-    InspecionadorCaminho,
-)  # ajuste o caminho conforme seu projeto
-
 
 @pytest.mark.parametrize(
     "input_path",

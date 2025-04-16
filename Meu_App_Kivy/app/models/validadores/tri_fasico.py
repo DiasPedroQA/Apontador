@@ -111,6 +111,6 @@ if __name__ == "__main__":
 
     for sistema, caminhos in caminhos_teste.items():
         print(f"\n--- Testando caminhos para {sistema} ---")
-        for caminho in caminhos:
-            resultado = ValidadorTriFasico.identificar_so(caminho)
-            print(resultado)
+        for caminho_x in caminhos:
+            resultado_x = ValidadorTriFasico.identificar_so(caminho_x)
+            print(resultado_x)
