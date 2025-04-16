@@ -11,15 +11,16 @@
 
 # pylint: disable=line-too-long, no-else-return, import-error, too-few-public-methods, too-many-ancestors  # noqa: E501
 
+from kivy.lang import Builder
+from kivy.uix.screenmanager import Screen
 
 from app.controller.caminho_controller import CaminhoController
-from kivy.lang import Builder
-from kivymd.uix.screen import MDScreen
+from app.models.identificador_sistema import Identidade
 
 Builder.load_file("app/view/tela_identificador.kv")
 
 
-class TelaIdentificador(MDScreen):
+class TelaIdentificador(Screen):
     """
         Tela de Identificação de Caminhos.
 
@@ -42,7 +43,7 @@ class TelaIdentificador(MDScreen):
         """
             Identifica o caminho de entrada fornecido pelo usuário.
         """
-        caminho_entrada: str = self.ids.entrada_caminho.text.strip()
+        caminho_entrada: str = str(self.ids.entrada_caminho.text.strip())
 
         if not caminho_entrada:
             self.ids.resultado_label.text = (
@@ -51,15 +52,17 @@ class TelaIdentificador(MDScreen):
             )
             return
 
-        resultado = self.controller.identificar_so(caminho_entrada=caminho_entrada)
+        resultado: Identidade = self.controller.identificar_so(
+            caminho_entrada=caminho_entrada
+        )
 
-        cor = "[color=00ff00]" if resultado["identifico"] else "[color=ff0000]"
-        identifico_texto = str(
-            f"{cor}{
-                'Sim'
-                if resultado['identifico']
-                else 'Não'
-            }[/color]"
+        cor: str = str(
+            "[color=00ff00]"
+            if resultado["identifico"]
+            else "[color=ff0000]"
+        )
+        identifico_texto: str = str(
+            f"{cor}{'Sim' if resultado['identifico'] else 'Não'}[/color]"
         )
 
         self.ids.resultado_label.text = (

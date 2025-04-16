@@ -2,31 +2,29 @@
 # -*- coding: utf-8 -*-
 
 """
-Ponto de entrada da aplicação KivyMD.
+Ponto de entrada da aplicação Kivy.
 
 Este módulo inicializa a aplicação com base na arquitetura MVC,
 carregando a interface gráfica da tela principal e preparando
 os componentes necessários.
 """
 
-from kivymd import MDApp
+from kivy.app import App
 from kivy.core.window import Window
 
 from app.view.tela_identificador import TelaIdentificador
 
 
-class MeuAppKivy(MDApp):
+class MeuAppKivy(App):
     """
-    Classe principal do aplicativo KivyMD.
+    Classe principal do aplicativo Kivy.
 
-    Responsável por inicializar o tema da aplicação, carregar a
-    tela principal e executar o loop principal do Kivy.
+    Responsável por carregar a tela principal e executar o loop
+    principal do Kivy.
     """
 
     def build(self):
         self.title = "Validador de Caminhos"
-        self.theme_cls.theme_style = "Light"
-        self.theme_cls.primary_palette = "BlueGray"
         return TelaIdentificador()
 
 
