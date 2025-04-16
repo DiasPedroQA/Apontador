@@ -27,8 +27,9 @@ class DadosCaminho(TypedDict):
 
 class InspecionadorCaminho:
     """
-    Classe responsável por analisar e extrair informações de um caminho
-    utilizando pathlib, com suporte a arquivos e diretórios.
+        Classe responsável por analisar e extrair
+        informações de um caminho utilizando pathlib,
+        com suporte a arquivos e diretórios.
     """
 
     @staticmethod
@@ -45,6 +46,10 @@ class InspecionadorCaminho:
 
     @classmethod
     def inspecionar(cls, caminho_entrada: str) -> DadosCaminho:
+        """
+            Inspeciona o caminho de entrada e retorna um
+            objeto com o resultado da avaliação.
+        """
         caminho = cls.normalizar(caminho_entrada)
 
         return {

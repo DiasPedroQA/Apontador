@@ -52,7 +52,10 @@ def test_identificar_caracteres_proibidos(mock_mensagens):
     assert resultado["identificado"] is False
     assert resultado["mensagem"] == mock_mensagens["validação"]["caracteres_proibidos"].format(caminho=caminho)
 
-@patch("app.models.validadores.tri_fasico.MENSAGENS", new_callable=lambda: mensagens_mock())
+@patch(
+    "app.models.validadores.tri_fasico.MENSAGENS",
+    new_callable=lambda: mensagens_mock()
+)
 def test_identificar_sistema_desconhecido(mock_mensagens):
     caminho = "invalid_path"
     resultado = ValidadorTriFasico.identificar_so(caminho)

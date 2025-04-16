@@ -8,7 +8,6 @@ from app.utils.utils_validacao import (
 # -*- coding: utf-8 -*-
 
 
-
 @pytest.mark.parametrize(
     "caminho_entrada, esperado",
     [
