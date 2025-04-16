@@ -2,11 +2,11 @@
 # -*- coding: utf-8 -*-
 
 """
-Ponto de entrada da aplicação Kivy.
+    Ponto de entrada da aplicação Kivy.
 
-Este módulo inicializa a aplicação com base na arquitetura MVC,
-carregando a interface gráfica da tela principal e preparando
-os componentes necessários.
+    Este módulo inicializa a aplicação com base na arquitetura MVC,
+    carregando a interface gráfica da tela principal e preparando
+    os componentes necessários.
 """
 
 from kivy.app import App
@@ -17,10 +17,10 @@ from app.view.tela_identificador import TelaIdentificador
 
 class MeuAppKivy(App):
     """
-    Classe principal do aplicativo Kivy.
+        Classe principal do aplicativo Kivy.
 
-    Responsável por carregar a tela principal e executar o loop
-    principal do Kivy.
+        Responsável por carregar a tela principal
+        e executar o loop principal do Kivy.
     """
 
     def build(self):
