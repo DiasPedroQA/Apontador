@@ -5,8 +5,8 @@
 # -*- coding: utf-8 -*-
 
 """
-Módulo utilitário para inspeção completa de caminhos de arquivos e diretórios
-usando o módulo pathlib de forma multiplataforma.
+    Módulo utilitário para inspeção completa de caminhos de arquivos e
+    diretórios usando o módulo pathlib de forma multiplataforma.
 """
 
 from pathlib import Path
