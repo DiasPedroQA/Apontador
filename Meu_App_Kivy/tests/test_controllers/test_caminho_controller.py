@@ -1,20 +1,19 @@
-import pytest
-from unittest.mock import MagicMock
-from app.controller.caminho_controller import CaminhoController
-from app.mensagens.mensageiro import MENSAGENS
-
 # -*- coding: utf-8 -*-
 """
     Testes para o módulo `caminho_controller`.
 """
 
+from unittest.mock import MagicMock
+import pytest
+from app.controller.caminho_controller import CaminhoController
+from app.mensagens.mensageiro import MENSAGENS
 
 
 @pytest.fixture
 def caminho_controller():
     """
-        Fixture para instanciar o CaminhoController
-        com um IdentificadorCaminho mockado.
+    Fixture para instanciar o CaminhoController
+    com um IdentificadorCaminho mockado.
     """
     controller = CaminhoController()
     controller.identificador = MagicMock()
@@ -23,7 +22,7 @@ def caminho_controller():
 
 def test_identificar_caminho_vazio(caminho_controller):
     """
-        Testa o caso em que o caminho de entrada está vazio.
+    Testa o caso em que o caminho de entrada está vazio.
     """
     caminho_entrada = ""
     resultado = caminho_controller.identificar_so(caminho_entrada)
@@ -36,14 +35,14 @@ def test_identificar_caminho_vazio(caminho_controller):
 
 def test_identificar_caminho_valido(caminho_controller):
     """
-        Testa o caso em que o caminho de entrada é válido.
+    Testa o caso em que o caminho de entrada é válido.
     """
     caminho_entrada = "/caminho/valido"
     caminho_controller.identificador.identificar_caminho.return_value = {
         "caminho_entrada": caminho_entrada,
         "sistema": "linux",
         "identifico": True,
-        "mensagem": "Caminho identificado com sucesso."
+        "mensagem": "Caminho identificado com sucesso.",
     }
 
     resultado = caminho_controller.identificar_so(caminho_entrada)
@@ -56,14 +55,14 @@ def test_identificar_caminho_valido(caminho_controller):
 
 def test_identificar_caminho_invalido(caminho_controller):
     """
-        Testa o caso em que o caminho de entrada é inválido.
+    Testa o caso em que o caminho de entrada é inválido.
     """
     caminho_entrada = "/caminho/invalido"
     caminho_controller.identificador.identificar_caminho.return_value = {
         "caminho_entrada": caminho_entrada,
         "sistema": "desconhecido",
         "identifico": False,
-        "mensagem": "Caminho inválido."
+        "mensagem": "Caminho inválido.",
     }
 
     resultado = caminho_controller.identificar_so(caminho_entrada)

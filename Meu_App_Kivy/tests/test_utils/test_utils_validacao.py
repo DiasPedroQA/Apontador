@@ -1,11 +1,14 @@
-import pytest
+# -*- coding: utf-8 -*-
+
+# pylint: disable=missing-module-docstring, missing-class-docstring, missing-function-docstring, line-too-long, no-else-return, import-error  # noqa: E501
+
+
 from pathlib import Path
+import pytest
 from app.utils.utils_validacao import (
     InspecionadorCaminho,
     DadosCaminho
 )
-
-# -*- coding: utf-8 -*-
 
 
 @pytest.mark.parametrize(
