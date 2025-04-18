@@ -1,33 +1,77 @@
-# main.py
 # -*- coding: utf-8 -*-
 
+# pylint: disable=C0114, C0115, C0116, R0903
+
 """
-    Ponto de entrada da aplicação Kivy.
+Ponto de entrada da aplicação Kivy.
 
-    Este módulo inicializa a aplicação com base na arquitetura MVC,
-    carregando a interface gráfica da tela principal e preparando
-    os componentes necessários.
+Este módulo inicializa a aplicação com base na arquitetura MVC,
+carregando a interface gráfica da tela principal e preparando
+os componentes necessários.
+
+┌────────────┐
+│  main.py   │
+└────┬───────┘
+     │
+     ▼
+┌────────────────────────────┐
+│ TelaPrincipal (View)       │
+│ tela_principal.py          │
+└────────────┬───────────────┘
+             │
+             ▼
+┌────────────────────────────────┐
+│ app_controller.py (Controller) │
+└───────────┬────────────────────┘
+            │
+     ┌──────├────────┐
+     ▼               ▼
+┌──────────────┐ ┌──────────────┐
+│ app_model.py │ │ helpers.py   │
+│ (Model)      │ │ (Utils)      │
+└──────────────┘ └──────────────┘
+     │                   │
+     ▼                   ▼
+┌────────────────────────────┐
+│ mensageiro.py (Messages)   │
+└────────────────────────────┘
+
 """
 
-from kivy.app import App
-from kivy.core.window import Window
+from kivy.core.window import Window  # type: ignore
+from kivymd.app import MDApp  # type: ignore
+from app.views.tela_principal import TelaPrincipal  # Import da view (Tela Principal)
+# from app.controller.app_controller import AppController  # Import do controlador
+from app.models.app_model import AppModel  # Import do modelo
+from app.utils.helpers import saudacao  # Import de funções utilitárias
+# from app.mensagens.mensageiro import Mensageiro  # Import de mensagens
 
-from app.view.tela_identificador import TelaIdentificador
 
-
-class MeuAppKivy(App):
+class MeuApp(MDApp):
     """
-        Classe principal do aplicativo Kivy.
-
-        Responsável por carregar a tela principal
-        e executar o loop principal do Kivy.
+    Classe principal do aplicativo Kivy. Inicializa a aplicação e carrega a tela principal.
+    A comunicação entre a interface, controlador e modelo é feita nesta classe.
     """
 
-    def build(self):
-        self.title = "Validador de Caminhos"
-        return TelaIdentificador()
+    def __init__(self, **kwargs):
+        """
+        Inicializa a aplicação, configurando o controlador, modelo e mensageiro.
+        """
+        super().__init__(**kwargs)
+        self.model = AppModel()  # Inicializa o modelo
+        # self.controller = AppController(self.model)  # Inicializa o controlador
+        # self.mensageiro = Mensageiro()  # Inicializa o sistema de mensagens
+
+    def build(self) -> TelaPrincipal:
+        """
+        Configura a interface gráfica da aplicação, retornando a tela principal.
+        """
+        self.theme_cls.primary_palette = "Green"
+        Window.size = (500, 500)
+        print(saudacao)
+        return TelaPrincipal()  # Passa o controlador para a view
+        # return TelaPrincipal(self.controller)  # Passa o controlador para a view
 
 
 if __name__ == "__main__":
-    Window.size = (1000, 700)  # Tamanho padrão da janela (ajustável)
-    MeuAppKivy().run()
+    MeuApp().run()
