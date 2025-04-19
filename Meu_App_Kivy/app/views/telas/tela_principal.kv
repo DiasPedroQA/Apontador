@@ -1,0 +1,55 @@
+<TelaPrincipal>:
+    BoxLayout:
+        orientation: 'vertical'
+        padding: 20
+        spacing: 20
+
+        Label:
+            text: "Tela Principal"
+            font_size: '24sp'
+            bold: True
+
+        Label:
+            text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+            text_size: self.width, None
+            size_hint_y: None
+            height: self.texture_size[1]
+
+        BoxLayout:
+            orientation: 'vertical'
+            size_hint_y: None
+            height: '120dp'
+            spacing: 10
+
+            Label:
+                text: "Digite algo para analisar:"
+                size_hint_y: None
+                height: self.texture_size[1]
+
+            TextInput:
+                id: input_texto
+                hint_text: "Digite aqui seu texto"
+                multiline: False
+
+        Button:
+            text: "Analisar"
+            size_hint_y: None
+            height: '48dp'
+            on_release:
+                root.realizar_analise()
+
+        Label:
+            id: output_label
+            text: ""
+            size_hint_y: None
+            height: self.texture_size[1]
+            color: 0.2, 0.5, 0.2, 1
+
+        Button:
+            text: "Voltar"
+            size_hint_y: None
+            height: '50dp'
+            on_release:
+                app.root.current = "tela_inicial"  # Navega de volta para a Tela Inicial
+                input_texto.text = ""  # Limpa o conteúdo da Tela Principal
+                output_label.text = ""  # Limpa a saída da Tela Principal

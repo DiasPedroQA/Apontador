@@ -1,0 +1,50 @@
+<TelaInicial>:
+    canvas.before:
+        Color:
+            rgba: 0.17, 0.17, 0.17, 1  # Fundo cinza escuro (#2C2C2C)
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
+    BoxLayout:
+        orientation: 'vertical'
+        padding: 20
+        spacing: 20
+
+        Image:
+            source: 'app/views/assets/logo.png'
+            size_hint_y: None
+            height: '100dp'
+            allow_stretch: True
+            keep_ratio: True
+
+        Label:
+            text: "Bem-vindo ao App"
+            font_size: '24sp'
+            color: 1, 1, 1, 1  # Branco
+            bold: True
+            halign: 'center'
+
+        Label:
+            text: "Uma plataforma simples para validar e analisar caminhos de sistema operacional."
+            font_size: '16sp'
+            color: 0.73, 0.73, 0.73, 1  # Subtexto claro
+            text_size: self.width, None
+            halign: 'center'
+            size_hint_y: None
+            height: self.texture_size[1]
+
+        Button:
+            text: "Começar"
+            size_hint_y: None
+            height: '50dp'
+            background_color: 0, 0, 0, 0  # Transparente
+            color: 1, 1, 1, 1  # Texto branco
+            canvas.before:
+                Color:
+                    rgba: 1, 1, 1, 1
+                Line:
+                    width: 1.2
+                    rectangle: self.x, self.y, self.width, self.height
+            on_release:
+                app.root.current = "tela_principal"  # Navega para a Tela Principal
